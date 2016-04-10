@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.app.model.TbUsers" table="tb_users" schema="wego_db">
+        <id name="id" column="id"/>
+        <property name="name" column="name"/>
+        <property name="password" column="password"/>
+        <property name="userName" column="userName"/>
+        <property name="email" column="email"/>
+        <property name="sex" column="sex"/>
+        <property name="phone" column="phone"/>
+        <property name="age" column="age"/>
+        <property name="images" column="images"/>
+        <property name="addressId" column="addressId"/>
+        <property name="rdate" column="rdate"/>
+        <property name="status" column="status"/>
+    </class>
+</hibernate-mapping>

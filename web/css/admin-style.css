@@ -1,0 +1,28 @@
+/*.templatemo-left-nav{*/
+    /*background:none;*/
+/*}*/
+.templatemo-sidebar{
+    width: 200px;
+    /*background:url("../img/adminbg4.jpg") center center;*/
+    /*background-size: cover;*/
+}
+.templatemo-left-nav a{
+    font-size: 16px;
+}
+footer{
+    padding: 5px 10px 5px 0;
+    color: #777;
+}
+.bor{
+    border: 1px solid red;
+}
+table th{
+    font-size: 16px;
+    text-align: center;
+}
+table tr img{
+    max-height: 50px;
+}
+.table>tbody>tr>td{
+    /*padding: 0px;*/
+}

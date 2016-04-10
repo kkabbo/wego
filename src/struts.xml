@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="default" extends="struts-default" namespace="/">
+
+		<!--为一进页面自动进action定义的-->
+		<action name="getProducts" class="productAction" method="getProducts">
+			<result name="success">/products.jsp</result>
+		</action>
+
+		<action name="product_*" class="productAction" method="{1}">
+			<result name="products" type="redirectAction">
+				<param name="actionName">product_index</param>
+			</result>
+			<result name="index">/products.jsp</result>
+			<result name="login">/login.jsp</result>
+			<result name="productType">/Admin/add_type.jsp</result>
+			<result name="productType2">/Admin/add_product.jsp</result>
+			<result name="product">/product.jsp</result>
+			<result name="input">/index.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+
+		<action name="order_*" class="orderAction" method="{1}">
+			<result name="products" type="redirectAction">
+				<param name="actionName">product_index</param>
+			</result>
+			<result name="login">/login.jsp</result>
+			<result name="gopay">/gopay.jsp</result>
+			<result name="pay">/pay.jsp</result>
+			<result name="payStatus">/payStatus.jsp</result>
+			<result name="orders" type="redirectAction">
+				<param name="actionName">order_getOrders</param>
+			</result>
+			<result name="showOrders">/orders.jsp</result>
+			<result name="order">/order.jsp</result>
+			<result name="input">/index.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="products" type="redirectAction">
+				<param name="actionName">product_index</param>
+			</result>
+			<result name="login">/login.jsp</result>
+			<result name="gopay">/gopay.jsp</result>
+			<result name="showAddress">/address.jsp</result>
+			<result name="address" type="redirectAction">
+				<param name="actionName">user_getMyAddress</param>
+			</result>
+			<result name="payStatus">/payStatus.jsp</result>
+			<result name="pay">/pay.jsp</result>
+			<result name="input">/index.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+
+
+	</package>
+</struts>
