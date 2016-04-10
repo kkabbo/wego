@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="templatemo-sidebar">
     <header class="templatemo-site-header">
         <div class="square"></div>
-        <a href="{:U('/'.GROUP_NAME.'/Index/')}"><h1>爱代购</h1> </a>
+        <a href="#"><h1>微购</h1> </a>
     </header>
 
     <div class="mobile-menu-icon">

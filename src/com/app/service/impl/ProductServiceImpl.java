@@ -106,12 +106,12 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public PageBean getProductsByName(String value, int page, int pageSize) {
-        final String hql = "from TbProduct where name like ?";
+        final String hql = "from TbProduct where name like '%"+value+"%'";
         int allRow = baseDao.total(hql);//总记录数
         int totalPage = PageBean.countTotalPage(pageSize, allRow);//总页数
         final int offset = PageBean.countOffset(pageSize, page);//当前页开始记录
         final int currentPage = PageBean.countCurrentPage(page);
-        List list = baseDao.findBypage(hql, offset, pageSize,value);//"一页"的记录
+        List list = baseDao.findBypage(hql, offset, pageSize);//"一页"的记录
 
         //把分页信息保存到Bean中
         PageBean pageBean = new PageBean();

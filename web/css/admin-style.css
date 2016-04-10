@@ -1,6 +1,9 @@
 /*.templatemo-left-nav{*/
     /*background:none;*/
 /*}*/
+*{
+    font-family: 'microsoft yahei', Arial, sans-serif;
+}
 .templatemo-sidebar{
     width: 200px;
     /*background:url("../img/adminbg4.jpg") center center;*/

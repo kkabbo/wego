@@ -25,19 +25,11 @@ To change this template use File | Settings | File Templates.
         .head-img {
             background: url("./images/bg.jpg") center center;
             background-size: cover;
-            padding: 50px 0 10px 0;
+            padding: 50px 0;
         }
 
         .head-img h5 {
             color: white;
-        }
-
-        .head-img .glyphicon-user {
-            padding: 7px;
-            color: white;
-            border: 1px solid white;
-            border-radius: 50%;
-            cursor: pointer;
         }
 
         .personal-list {
@@ -80,10 +72,6 @@ To change this template use File | Settings | File Templates.
                     <img src="./images/lemon.jpg" class="img-responsive img-circle center-block" alt="">
                     <h5><strong>15820599475</strong></h5>
                 </div>
-                <div class="col-xs-5 text-center">
-                    <span class="glyphicon glyphicon-user"></span>
-                    <h5>个人资料</h5>
-                </div>
             </div>
             <div class="row text-center personal-list">
                 <div class="col-xs-4">
@@ -94,13 +82,13 @@ To change this template use File | Settings | File Templates.
                 </div>
 
                 <div class="col-xs-4">
-                    <a href="products.jsp">
+                    <a href="product_getProducts">
                         <h3><span class="text-danger glyphicon glyphicon-heart"></span></h3>
                     </a>
                     <h5>购物中心</h5>
                 </div>
                 <div class="col-xs-4">
-                    <a href="products.jsp">
+                    <a href="product_getProducts">
                         <h3><span class="text-success glyphicon glyphicon-shopping-cart"></span></h3>
                     </a>
                     <h5>购物车</h5>
@@ -112,7 +100,7 @@ To change this template use File | Settings | File Templates.
                         <div class="col-xs-8">
                             <h5>
                                 <span class="glyphicon glyphicon-user"></span>
-                                我的XXX
+                                我的信息
                             </h5>
                         </div>
                         <div class="col-xs-4 text-right">
@@ -138,25 +126,29 @@ To change this template use File | Settings | File Templates.
                         </div>
                     </a>
 
-                    <div class="row personal-item">
-                        <div class="col-xs-8">
-                            <h5>
-                                <span class="glyphicon glyphicon-info-sign"></span>
-                                帮助中心
-                            </h5>
+                    <a href="help.jsp">
+                        <div class="row personal-item">
+                            <div class="col-xs-8">
+                                <h5>
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                    帮助中心
+                                </h5>
+                            </div>
+                            <div class="col-xs-4 text-right">
+                                <h5>
+                                    <span class="glyphicon glyphicon-menu-right"></span>
+                                </h5>
+                            </div>
                         </div>
-                        <div class="col-xs-4 text-right">
-                            <h5>
-                                <span class="glyphicon glyphicon-menu-right"></span>
-                            </h5>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
             <div class="row" style="margin-top: 20px">
                 <div class="col-xs-12">
-                    <button class="btn btn-danger btn-block">注销</button>
+                    <a href="user_logOut">
+                        <button class="btn btn-danger btn-block">注销</button>
+                    </a>
                 </div>
             </div>
         </div>

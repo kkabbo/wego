@@ -19,28 +19,18 @@ To change this template use File | Settings | File Templates.
     <link rel="stylesheet" href="./css/common.css">
 
     <style>
-        html, body {
-            font-family: 'microsoft yahei', Arial, sans-serif;
-            /*background-color: #FCFCFC;*/
-            background-color: #F8F8F8;
-            width: 100%;
-            height: 100%;
-        }
-
         .top > div {
             padding: 0;
             margin: 15px 0;
         }
-
         .user {
             font-size: 16px;
         }
-
         .good {
             padding: 5px 10px;
         }
 
-        .good h5{
+        .good h5 {
             margin: 0;
             padding: 5px 0;
             background-color: white;
@@ -127,10 +117,12 @@ To change this template use File | Settings | File Templates.
             background-color: white;
             margin-bottom: 5px;
         }
+
         .shopping-cart .good-price {
             padding-top: 8px;
         }
-        .shopping-cart .glyphicon-minus{
+
+        .shopping-cart .glyphicon-minus {
             top: 10px;
             right: 0;
         }
@@ -165,8 +157,16 @@ To change this template use File | Settings | File Templates.
                 <div class="col-xs-10">
                     <form action="product_getProductsByName" method="post" enctype="multipart/form-data">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for..." name="product.name"
-                                   value="">
+                            <s:if test="%{#request.searchKey!=null && #request.searchKey != '' }">
+                                <input type="text" class="form-control"
+                                       placeholder="<s:property value="#request.searchKey"/>" name="product.name"
+                                       value="">
+                            </s:if>
+                            <s:else>
+                                <input type="text" class="form-control"
+                                placeholder="Search for..." name="product.name"
+                                value="">
+                            </s:else>
                             <span class="input-group-btn" id="search">
                                 <button class="btn btn-default" type="submit">
                                     <span style="color: green" class="glyphicon glyphicon-search"
@@ -190,13 +190,19 @@ To change this template use File | Settings | File Templates.
                                         alt=""
                                         class="img-responsive center-block"></a>
                                 <h5 class="good-name text-left"><s:property value="#product.name"/></h5>
-                                <h5 class="good-price text-left" data-price="<s:property value='#product.normalPrice'/>">
+                                <h5 class="good-price text-left"
+                                    data-price="<s:property value='#product.normalPrice'/>">
                                     ￥<s:property value="#product.normalPrice"/>
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </h5>
                                 <h5 hidden class="good-id"><s:property value="#product.id"/></h5>
                             </div>
                         </s:iterator>
+                    </div>
+                    <div class="row" style="padding-top: 20px;padding-bottom: 50px">
+                        <div class="col-xs-10 col-xs-offset-1" >
+                            <a href="product_nextPage" class="btn btn-default btn-block">更多商品...</a>
+                        </div>
                     </div>
                 </div>
             </div>

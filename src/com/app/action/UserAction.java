@@ -9,6 +9,9 @@ import org.apache.struts2.ServletActionContext;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -120,5 +123,30 @@ public class UserAction extends ActionSupport {
             request.setAttribute("defaultAddress", null);
         }
         return null;
+    }
+
+    public String wechatLogin() throws IOException {
+
+        String appid = "wx81109d302fe4126e";
+        String secret = "95541c5bf650e005bc6f487c846058db";
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String code = request.getParameter("code");
+        if(code!=null && !code.equals("")){
+            String openUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+appid+"&secret="+secret+"&code="+code+"&grant_type=authorization_code";
+            URL url = new URL(openUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            return "products";
+        }else {//为获取微信登录权限
+            return ERROR;
+        }
+
+    }
+
+    //退出
+    public String logOut(){
+        Map session = ActionContext.getContext().getSession();
+        session.clear();
+        return LOGIN;
     }
 }

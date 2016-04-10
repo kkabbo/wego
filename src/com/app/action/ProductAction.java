@@ -102,7 +102,7 @@ public class ProductAction extends ActionSupport {
     //获取商品
     public String getProducts() {
         Map session = ActionContext.getContext().getSession();
-        session.put("searchKey", null);//搜索关键字为空的话是所有商品
+        session.put("searchKey", "");//搜索关键字为空的话是所有商品
 
         setPageBean(productService.getProducts(1, 10));
         session.put("pageBean", this.getPageBean());
@@ -117,7 +117,7 @@ public class ProductAction extends ActionSupport {
     //下一页
     public String nextPage() {
         Map session = ActionContext.getContext().getSession();
-        String searchKey = this.product.getName();
+        String searchKey = (String)session.get("searchKey");
         PageBean pb = (PageBean) session.get("pageBean");
         int currentPage = 0;
         int pageSize = 0;
@@ -128,19 +128,21 @@ public class ProductAction extends ActionSupport {
             }else{
                 currentPage = pb.getCurrentPage();
             }
-            pageSize = pb.getPageSize();
+            pageSize = pb.getPageSize() * currentPage;//数据
         }else{//pb为空说明没有进acion获取数据直接进products.jsp
             getProducts();
+            return "index";
         }
         if(searchKey==null || searchKey.equals("")){//搜索关键字为空说明是查找所有商品
-            setPageBean(productService.getProducts(currentPage, pageSize));
+            setPageBean(productService.getProducts(1, pageSize));
         }else{
-            setPageBean(productService.getProductsByName(searchKey, currentPage, pageSize));
+            setPageBean(productService.getProductsByName(searchKey, 1, pageSize));
         }
         session.put("pageBean", this.getPageBean());
         List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
         HttpServletRequest request = ServletActionContext.getRequest();
         if (productList != null) {
+            request.setAttribute("searchKey", searchKey);
             request.setAttribute("productList", productList);
         }
         return "index";
@@ -156,6 +158,10 @@ public class ProductAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         if (productList != null) {
             request.setAttribute("productList", productList);
+            request.setAttribute("searchKey", this.product.getName());
+            if(this.product.getName().equals("")){
+                request.setAttribute("searchKey", "");
+            }
         }
         return "index";
     }
