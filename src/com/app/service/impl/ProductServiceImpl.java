@@ -133,4 +133,39 @@ public class ProductServiceImpl implements ProductService {
         String hql = "from TbProduct where id = ?";
         return baseDao.get(TbProduct.class,pid);
     }
+
+    /**
+     * 通过id删除商品
+     * @param pid
+     * @return
+     */
+    public boolean deleteProduct(int pid){
+        return baseDao.delete(TbProduct.class,pid);
+    }
+
+    /**
+     * 通过商品id更新商品状态
+     * @param status
+     * @param pid
+     * @return
+     */
+    public boolean updateProductStatus(String status,int pid){
+        String hql = "update TbProduct set status = ? where id = ?";
+        return baseDao.update(hql,status,pid);
+    }
+
+    /**
+     * 通过id验证商品是否有下单
+     * @param pid
+     * @return
+     */
+    public boolean checkProductIsUsed(int pid){
+        String hql = "from TbSalesitem where productId = ?";
+        List list = baseDao.find(hql,pid);
+        if(list == null || list.size() <= 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

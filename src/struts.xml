@@ -19,6 +19,7 @@
 			<result name="productType">/Admin/add_type.jsp</result>
 			<result name="productType2">/Admin/add_product.jsp</result>
 			<result name="product">/product.jsp</result>
+			<result name="manageProducts">/Admin/manage_products.jsp</result>
 			<result name="input">/index.jsp</result>
 			<result name="error">/index.jsp</result>
 		</action>
@@ -45,6 +46,7 @@
 				<param name="actionName">product_index</param>
 			</result>
 			<result name="login">/login.jsp</result>
+			<result name="wechatLogin">/wechatLogin.jsp</result>
 			<result name="gopay">/gopay.jsp</result>
 			<result name="showAddress">/address.jsp</result>
 			<result name="address" type="redirectAction">
@@ -52,6 +54,7 @@
 			</result>
 			<result name="payStatus">/payStatus.jsp</result>
 			<result name="pay">/pay.jsp</result>
+			<result name="personal">/personal.jsp</result>
 			<result name="input">/index.jsp</result>
 			<result name="error">/index.jsp</result>
 		</action>

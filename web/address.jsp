@@ -132,7 +132,7 @@
 </div>
 
 <div class="goback">
-    <a href="personal.jsp"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <a href="user_personal"><span class="glyphicon glyphicon-menu-left"></span></a>
 </div>
 
 <script type="text/javascript" src="js/jquery-2.0.2.js"></script>

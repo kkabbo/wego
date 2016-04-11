@@ -5,6 +5,7 @@ Time: 23:34
 To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,8 +70,14 @@ To change this template use File | Settings | File Templates.
         <div class="col-lg-8 col-lg-offset-2">
             <div class="row head-img">
                 <div class="col-xs-4 col-xs-offset-4 text-center">
-                    <img src="./images/lemon.jpg" class="img-responsive img-circle center-block" alt="">
-                    <h5><strong>15820599475</strong></h5>
+                    <s:if test="%{#request.user == null }">
+                        <img src="./images/lemon.jpg" class="img-responsive img-circle center-block" alt="">
+                        <h5><strong>welcome</strong></h5>
+                    </s:if>
+                    <s:else>
+                        <img src="<s:property value='#request.user.images'/>" class="img-responsive img-circle center-block" alt="">
+                        <h5><strong><s:property value='#request.user.userName'/></strong></h5>
+                    </s:else>
                 </div>
             </div>
             <div class="row text-center personal-list">

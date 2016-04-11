@@ -1,6 +1,7 @@
 package com.app.service;
 
 import com.app.model.TbAddress;
+import com.app.model.TbUsers;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface  UserService {
     List getDefaultAddress(int uid);
     List getAddress(int uid);
     boolean deleteAddress(int aid);
+    Object addUser(TbUsers users);
+    Object getUserByName(String name);
 }

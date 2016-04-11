@@ -135,7 +135,6 @@ To change this template use File | Settings | File Templates.
             background-color: #F0F0F0;
             padding: 5px 10px;
         }
-
         strong {
             color: red;
         }
@@ -148,7 +147,7 @@ To change this template use File | Settings | File Templates.
         <div class="col-lg-8 col-lg-offset-2">
             <div class="row top">
                 <div class="col-xs-2 text-center">
-                    <a href="personal.jsp">
+                    <a href="user_personal">
                         <div class="user btn btn-block">
                             <span style="color: green" class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         </div>

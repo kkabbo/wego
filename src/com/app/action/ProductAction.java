@@ -99,7 +99,7 @@ public class ProductAction extends ActionSupport {
         return "index";
     }
 
-    //获取商品
+    //前台获取商品
     public String getProducts() {
         Map session = ActionContext.getContext().getSession();
         session.put("searchKey", "");//搜索关键字为空的话是所有商品
@@ -112,6 +112,76 @@ public class ProductAction extends ActionSupport {
             request.setAttribute("productList", productList);
         }
         return "index";
+    }
+    //后台获取商品
+    public String manageProducts(){
+        setPageBean(productService.getProducts(1, 5));
+        List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        if (productList != null) {
+            request.setAttribute("productList", productList);
+            request.setAttribute("pageBean",this.getPageBean());
+        }
+        return "manageProducts";
+    }
+    //删除商品
+    public String deleteProduct(){
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String pid = request.getParameter("id");
+        if(pid != null && !pid.equals("")){
+            this.setProduct((TbProduct) productService.getProductInfo(Integer.parseInt(pid)));//查看是否有这个商品
+            boolean isUsed = productService.checkProductIsUsed(Integer.parseInt(pid));//该商品是否被下单
+            if(this.product != null&& !isUsed && productService.deleteProduct(Integer.parseInt(pid))){//删除商品
+                setPageBean(productService.getProducts(1, 5));
+                List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
+                request.setAttribute("productList", productList);
+                request.setAttribute("pageBean",this.getPageBean());
+                request.setAttribute("info","删除成功！");
+            }else{//删除失败
+                request.setAttribute("info","该商品已被下单或者不存在，无法删除。");
+            }
+        }else{
+            request.setAttribute("info","该商品不存在！");
+        }
+        return "manageProducts";
+    }
+    //商品上架
+    public String saleProduct(){
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String pid = request.getParameter("id");
+        if(pid != null && !pid.equals("")){
+            if(productService.updateProductStatus("上架",Integer.parseInt(pid))){
+                setPageBean(productService.getProducts(1, 5));
+                List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
+                request.setAttribute("productList", productList);
+                request.setAttribute("pageBean",this.getPageBean());
+            }else{//更新失败
+                request.setAttribute("info","该商品上架失败。");
+            }
+        }else{//没有获取id
+            request.setAttribute("info","该商品不存在！");
+        }
+        return "manageProducts";
+
+    }
+    //商品下架
+    public String stockProduct(){
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String pid = request.getParameter("id");
+        if(pid != null && !pid.equals("")){
+            if(productService.updateProductStatus("下架",Integer.parseInt(pid))){
+                setPageBean(productService.getProducts(1, 5));
+                List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
+                request.setAttribute("pageBean",this.getPageBean());
+                request.setAttribute("productList", productList);
+            }else{//更新失败
+                request.setAttribute("info","该商品下架失败。");
+            }
+        }else{
+            request.setAttribute("info","该商品不存在！");
+        }
+        return "manageProducts";
+
     }
 
     //下一页

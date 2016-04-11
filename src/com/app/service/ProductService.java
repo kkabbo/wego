@@ -22,7 +22,7 @@ public interface ProductService {
     List<TbProduct> getProductsSortDesc(int page, int pageSize);
     //默认获取所有商品
     List<TbProduct> getProducts();
-
+    //分页获取商品
     PageBean getProducts(int page, int pageSize);
 
     List<TbProduct> getProductsByNameSortAsc(String value, int page, int pageSize);
@@ -32,4 +32,10 @@ public interface ProductService {
     PageBean getProductsByName(String value, int page, int pageSize);
     //通过商品id获取商品信息
     Object getProductInfo(int pid);
+    //通过id删除商品
+    boolean deleteProduct(int pid);
+    //更新商品状态
+    boolean updateProductStatus(String status,int id);
+    //验证商品是否有下单
+    boolean checkProductIsUsed(int pid);
 }

@@ -10,8 +10,6 @@
     <link rel="SHORTCUT ICON" href="../images/logo.ico"/>
     <meta name="description" content="后台">
 
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/templatemo-style.css" rel="stylesheet">
     <link href="../css/admin-style.css" rel="stylesheet">
 </head>

@@ -2,6 +2,7 @@ package com.app.service.impl;
 
 import com.app.dao.BaseDao;
 import com.app.model.TbAddress;
+import com.app.model.TbUsers;
 import com.app.service.UserService;
 
 import javax.annotation.Resource;
@@ -57,5 +58,33 @@ public class UserServiceImpl implements UserService{
      */
     public boolean deleteAddress(int aid){
         return baseDao.delete(TbAddress.class,aid);
+    }
+
+    /**
+     * 新增用户，返回用户对象
+     * @param users
+     * @return
+     */
+    public Object addUser(TbUsers users){
+        if(baseDao.save(users)){
+            return getUserByName(users.getName());
+        }else {
+            return null;
+        }
+    }
+
+    /**
+     * 通过name 获取用户对象
+     * @param name
+     * @return
+     */
+    public Object getUserByName(String name){
+        String hql = "from TbUsers where name = ?";
+        List list = baseDao.find(hql,name);
+        if (list!=null && list.size()>0){
+            return list.get(0);
+        }else{
+            return null;
+        }
     }
 }
