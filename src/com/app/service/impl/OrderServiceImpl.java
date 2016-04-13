@@ -1,6 +1,7 @@
 package com.app.service.impl;
 
 import com.app.dao.BaseDao;
+import com.app.model.PageBean;
 import com.app.model.TbSalesitem;
 import com.app.model.TbSalesorder;
 import com.app.service.OrderService;
@@ -162,4 +163,28 @@ public class OrderServiceImpl implements OrderService {
         return baseDao.find(hql,uid);
     }
 
+    /**
+     * 分页获取订单信息
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public PageBean getOrders(int page, int pageSize){
+        final String hql = "from TbSalesorder";//查询语句
+        int allRow = baseDao.total(hql);//总记录数
+        int totalPage = PageBean.countTotalPage(pageSize, allRow);//总页数
+        final int offset = PageBean.countOffset(pageSize, page);//当前页开始记录
+        final int currentPage = PageBean.countCurrentPage(page);
+        List list = baseDao.findBypage(hql, offset, pageSize);//"一页"的记录
+
+        //把分页信息保存到Bean中
+        PageBean pageBean = new PageBean();
+        pageBean.setPageSize(pageSize);
+        pageBean.setCurrentPage(currentPage);
+        pageBean.setAllRow(allRow);
+        pageBean.setTotalPage(totalPage);
+        pageBean.setList(list);
+        pageBean.init();
+        return pageBean;
+    }
 }

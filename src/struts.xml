@@ -36,6 +36,7 @@
 				<param name="actionName">order_getOrders</param>
 			</result>
 			<result name="showOrders">/orders.jsp</result>
+			<result name="manageOrders">/Admin/manage_orders.jsp</result>
 			<result name="order">/order.jsp</result>
 			<result name="input">/index.jsp</result>
 			<result name="error">/index.jsp</result>
@@ -52,6 +53,7 @@
 			<result name="address" type="redirectAction">
 				<param name="actionName">user_getMyAddress</param>
 			</result>
+			<result name="manageUsers">/Admin/manage_users.jsp</result>
 			<result name="payStatus">/payStatus.jsp</result>
 			<result name="pay">/pay.jsp</result>
 			<result name="personal">/personal.jsp</result>

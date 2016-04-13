@@ -1,5 +1,6 @@
 package com.app.action;
 
+import com.app.model.PageBean;
 import com.app.model.TbAddress;
 import com.app.model.TbUsers;
 import com.app.service.UserService;
@@ -27,9 +28,27 @@ import java.util.Map;
 public class UserAction extends ActionSupport {
     private TbUsers user;
     private TbAddress address;
+    private PageBean pageBean;
+    private int paseSize;
 
     @Resource
     private UserService userService;
+
+    public PageBean getPageBean() {
+        return pageBean;
+    }
+
+    public void setPageBean(PageBean pageBean) {
+        this.pageBean = pageBean;
+    }
+
+    public int getPaseSize() {
+        return paseSize;
+    }
+
+    public void setPaseSize(int paseSize) {
+        this.paseSize = paseSize;
+    }
 
     public TbUsers getUser() {
         return user;
@@ -237,5 +256,18 @@ public class UserAction extends ActionSupport {
         }
         request.setAttribute("user",users);
         return "personal";
+    }
+
+    //分页获取用户
+    public String getUsers(){
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String page = request.getParameter("page");
+        setPageBean(userService.getUsers(Integer.parseInt(page),paseSize));
+        List<TbUsers> userList = (List<TbUsers>) this.pageBean.getList();
+        if (userList != null) {
+            request.setAttribute("userList", userList);
+            request.setAttribute("pageBean",this.getPageBean());
+        }
+        return "manageUsers";
     }
 }

@@ -24,6 +24,7 @@ public class ProductAction extends ActionSupport {
     private File file;
     private String fileFileName;
     private PageBean pageBean;//包含分页信息的bean
+    private int paseSize = 6;
     @Resource
     private ProductService productService;
 
@@ -113,11 +114,13 @@ public class ProductAction extends ActionSupport {
         }
         return "index";
     }
-    //后台获取商品
-    public String manageProducts(){
-        setPageBean(productService.getProducts(1, 5));
-        List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
+
+    //通过传过的页数获取商品
+    public String getProductsBypage(){
         HttpServletRequest request = ServletActionContext.getRequest();
+        String page = request.getParameter("page");
+        setPageBean(productService.getProducts(Integer.parseInt(page),paseSize));
+        List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
         if (productList != null) {
             request.setAttribute("productList", productList);
             request.setAttribute("pageBean",this.getPageBean());
@@ -128,11 +131,12 @@ public class ProductAction extends ActionSupport {
     public String deleteProduct(){
         HttpServletRequest request = ServletActionContext.getRequest();
         String pid = request.getParameter("id");
+        String page = request.getParameter("page");
         if(pid != null && !pid.equals("")){
             this.setProduct((TbProduct) productService.getProductInfo(Integer.parseInt(pid)));//查看是否有这个商品
             boolean isUsed = productService.checkProductIsUsed(Integer.parseInt(pid));//该商品是否被下单
             if(this.product != null&& !isUsed && productService.deleteProduct(Integer.parseInt(pid))){//删除商品
-                setPageBean(productService.getProducts(1, 5));
+                setPageBean(productService.getProducts(Integer.parseInt(page), paseSize));
                 List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
                 request.setAttribute("productList", productList);
                 request.setAttribute("pageBean",this.getPageBean());
@@ -149,9 +153,10 @@ public class ProductAction extends ActionSupport {
     public String saleProduct(){
         HttpServletRequest request = ServletActionContext.getRequest();
         String pid = request.getParameter("id");
+        String page = request.getParameter("page");
         if(pid != null && !pid.equals("")){
             if(productService.updateProductStatus("上架",Integer.parseInt(pid))){
-                setPageBean(productService.getProducts(1, 5));
+                setPageBean(productService.getProducts(Integer.parseInt(page), paseSize));
                 List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
                 request.setAttribute("productList", productList);
                 request.setAttribute("pageBean",this.getPageBean());
@@ -168,9 +173,10 @@ public class ProductAction extends ActionSupport {
     public String stockProduct(){
         HttpServletRequest request = ServletActionContext.getRequest();
         String pid = request.getParameter("id");
+        String page = request.getParameter("page");
         if(pid != null && !pid.equals("")){
             if(productService.updateProductStatus("下架",Integer.parseInt(pid))){
-                setPageBean(productService.getProducts(1, 5));
+                setPageBean(productService.getProducts(Integer.parseInt(page),paseSize));
                 List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
                 request.setAttribute("pageBean",this.getPageBean());
                 request.setAttribute("productList", productList);

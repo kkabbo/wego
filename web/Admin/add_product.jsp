@@ -11,15 +11,8 @@ To change this template use File | Settings | File Templates.
 
 <body>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-                微购商城后台管理
-            </a>
-        </div>
-    </div>
-</nav>
+<jsp:include page="./common/common-title.jsp"></jsp:include>
+
 <div class="container-fluid">
     <div class="row">
         <!--Main nav-->

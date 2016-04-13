@@ -1,5 +1,6 @@
 package com.app.service;
 
+import com.app.model.PageBean;
 import com.app.model.TbAddress;
 import com.app.model.TbUsers;
 
@@ -16,4 +17,5 @@ public interface  UserService {
     boolean deleteAddress(int aid);
     Object addUser(TbUsers users);
     Object getUserByName(String name);
+    PageBean getUsers(int page, int pageSize);
 }

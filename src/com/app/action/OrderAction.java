@@ -1,9 +1,6 @@
 package com.app.action;
 
-import com.app.model.TbAddress;
-import com.app.model.TbProduct;
-import com.app.model.TbSalesitem;
-import com.app.model.TbSalesorder;
+import com.app.model.*;
 import com.app.service.OrderService;
 import com.app.service.ProductService;
 import com.app.service.UserService;
@@ -25,12 +22,30 @@ import java.util.Map;
 public class OrderAction extends ActionSupport {
     private TbSalesorder salesorder;
     private TbSalesitem salesitem;
+    private PageBean pageBean;
+    private int paseSize = 10;
     @Resource
     private OrderService orderService;
     @Resource
     private ProductService productService;
     @Resource
     private UserService userService;
+
+    public int getPaseSize() {
+        return paseSize;
+    }
+
+    public void setPaseSize(int paseSize) {
+        this.paseSize = paseSize;
+    }
+
+    public PageBean getPageBean() {
+        return pageBean;
+    }
+
+    public void setPageBean(PageBean pageBean) {
+        this.pageBean = pageBean;
+    }
 
     public UserService getUserService() {
         return userService;
@@ -294,5 +309,18 @@ public class OrderAction extends ActionSupport {
             return "orders";
         }
 
+    }
+
+    //通过页数获取所有订单
+    public String getAllOrders(){
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String page = request.getParameter("page");
+        setPageBean(orderService.getOrders(Integer.parseInt(page),paseSize));
+        List<TbSalesorder> orderList = (List<TbSalesorder>) this.pageBean.getList();
+        if (orderList != null) {
+            request.setAttribute("orderList", orderList);
+            request.setAttribute("pageBean",this.getPageBean());
+        }
+        return "manageOrders";
     }
 }
