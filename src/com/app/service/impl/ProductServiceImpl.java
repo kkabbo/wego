@@ -106,7 +106,7 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public PageBean getProductsByName(String value, int page, int pageSize) {
-        final String hql = "from TbProduct where name like '%"+value+"%'";
+        final String hql = "from TbProduct where status = '上架' and name like '%"+value+"%'";
         int allRow = baseDao.total(hql);//总记录数
         int totalPage = PageBean.countTotalPage(pageSize, allRow);//总页数
         final int offset = PageBean.countOffset(pageSize, page);//当前页开始记录
@@ -167,5 +167,14 @@ public class ProductServiceImpl implements ProductService {
         }else{
             return true;
         }
+    }
+
+    /**
+     * 更新商品
+     * @param product
+     * @return
+     */
+    public boolean updateProduct(TbProduct product){
+        return baseDao.update(product);
     }
 }

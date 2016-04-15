@@ -5,11 +5,6 @@
 <struts>
 	<package name="default" extends="struts-default" namespace="/">
 
-		<!--为一进页面自动进action定义的-->
-		<action name="getProducts" class="productAction" method="getProducts">
-			<result name="success">/products.jsp</result>
-		</action>
-
 		<action name="product_*" class="productAction" method="{1}">
 			<result name="products" type="redirectAction">
 				<param name="actionName">product_index</param>
@@ -19,7 +14,11 @@
 			<result name="productType">/Admin/add_type.jsp</result>
 			<result name="productType2">/Admin/add_product.jsp</result>
 			<result name="product">/product.jsp</result>
+			<result name="redirectProducts" type="redirectAction">
+				<param name="actionName">product_redirectProduct</param>
+			</result>
 			<result name="manageProducts">/Admin/manage_products.jsp</result>
+			<result name="showProducts">/Admin/manage_products.jsp</result>
 			<result name="input">/index.jsp</result>
 			<result name="error">/index.jsp</result>
 		</action>
@@ -28,10 +27,10 @@
 			<result name="products" type="redirectAction">
 				<param name="actionName">product_index</param>
 			</result>
-			<result name="login">/login.jsp</result>
-			<result name="gopay">/gopay.jsp</result>
-			<result name="pay">/pay.jsp</result>
-			<result name="payStatus">/payStatus.jsp</result>
+			<result name="login">login.jsp</result>
+			<result name="gopay">gopay.jsp</result>
+			<result name="pay">pay.jsp</result>
+			<result name="payStatus">payStatus.jsp</result>
 			<result name="orders" type="redirectAction">
 				<param name="actionName">order_getOrders</param>
 			</result>

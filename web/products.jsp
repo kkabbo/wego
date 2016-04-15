@@ -216,7 +216,7 @@ To change this template use File | Settings | File Templates.
             <div class="row">
                 <div class="col-xs-12 shopping-cart">
 
-                    <s:action name="order_getCart" executeResult="false" namespace="/"> </s:action>
+                    <s:action name="order_getCart" executeResult="false" namespace="/"></s:action>
                     <s:iterator value="#request.salesitemList" var="salesitem">
                         <div class="row good">
                             <div class="col-xs-4 ">
@@ -291,11 +291,16 @@ To change this template use File | Settings | File Templates.
     </div>
 </div>
 
+<input id="error" type="hidden" value="<s:property value='#request.info'/>">
+
 <script type="text/javascript" src="./js/jquery-2.0.2.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function () {
-
+        var error = $("#error").val();
+        if (error != null && error != "") {
+            alert(error);
+        }
     });
     //添加购物车数量
     $(".glyphicon-plus").click(function () {

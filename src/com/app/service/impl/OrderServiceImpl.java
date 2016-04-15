@@ -2,6 +2,7 @@ package com.app.service.impl;
 
 import com.app.dao.BaseDao;
 import com.app.model.PageBean;
+import com.app.model.TbProduct;
 import com.app.model.TbSalesitem;
 import com.app.model.TbSalesorder;
 import com.app.service.OrderService;
@@ -186,5 +187,10 @@ public class OrderServiceImpl implements OrderService {
         pageBean.setList(list);
         pageBean.init();
         return pageBean;
+    }
+
+    //更新商品信息（库存/销量）
+    public boolean updateProduct(TbProduct product){
+        return baseDao.update(product);
     }
 }

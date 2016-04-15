@@ -1,6 +1,7 @@
 package com.app.service;
 
 import com.app.model.PageBean;
+import com.app.model.TbProduct;
 import com.app.model.TbSalesitem;
 import com.app.model.TbSalesorder;
 
@@ -25,4 +26,5 @@ public interface OrderService {
     TbSalesorder getOrder(int id);
     List getOders(int uid);
     PageBean getOrders(int page, int pageSize);
+    boolean updateProduct(TbProduct product);
 }

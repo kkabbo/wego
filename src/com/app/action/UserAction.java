@@ -7,15 +7,12 @@ import com.app.service.UserService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,10 +26,11 @@ public class UserAction extends ActionSupport {
     private TbUsers user;
     private TbAddress address;
     private PageBean pageBean;
-    private int paseSize;
+    private int paseSize = 10;
 
     @Resource
     private UserService userService;
+
 
     public PageBean getPageBean() {
         return pageBean;
@@ -123,8 +121,12 @@ public class UserAction extends ActionSupport {
     //获取地址
     public String getMyAddress() {
         Map session = ActionContext.getContext().getSession();
-//        String uid = session.get("uid").toString();
-        String uid = "1";
+        String uid ;
+        if(session.containsKey("uid")){
+            uid = session.get("uid").toString();
+        }else{
+            return LOGIN;
+        }
         if (uid != null && !uid.equals("")) {
             List<TbAddress> list = (List<TbAddress>) userService.getAddress(Integer.parseInt(uid));
             HttpServletRequest request = ServletActionContext.getRequest();
@@ -138,8 +140,12 @@ public class UserAction extends ActionSupport {
     //获取默认地址
     public String getDefaultAddress() {
         Map session = ActionContext.getContext().getSession();
-//        String uid = session.get("uid").toString();
-        String uid = "1";
+        String uid;
+        if(session.containsKey("uid")){
+            uid = session.get("uid").toString();
+        }else{
+            return LOGIN;
+        }
         List list = userService.getDefaultAddress(Integer.parseInt(uid));
         HttpServletRequest request = ServletActionContext.getRequest();
         if (list != null && list.size() > 0) {
@@ -239,6 +245,17 @@ public class UserAction extends ActionSupport {
         connection.disconnect();
         return sb.toString();
     }
+    public String login(){
+        Map session = ActionContext.getContext().getSession();
+        TbUsers users = (TbUsers)userService.getUserByName(this.user.getName());
+        if(users.getPassword().equals(this.getUser().getPassword())){
+            session.put("uid",users.getId());
+            session.put("user",users);
+        }else{
+            return LOGIN;
+        }
+        return "products";
+    }
 
     //退出
     public String logOut() {
@@ -253,6 +270,8 @@ public class UserAction extends ActionSupport {
         TbUsers users = null;
         if(session.containsKey("user")){
             users = (TbUsers)session.get("user");
+        }else{
+            return LOGIN;
         }
         request.setAttribute("user",users);
         return "personal";
@@ -262,6 +281,21 @@ public class UserAction extends ActionSupport {
     public String getUsers(){
         HttpServletRequest request = ServletActionContext.getRequest();
         String page = request.getParameter("page");
+        setPageBean(userService.getUsers(Integer.parseInt(page),paseSize));
+        List<TbUsers> userList = (List<TbUsers>) this.pageBean.getList();
+        if (userList != null) {
+            request.setAttribute("userList", userList);
+            request.setAttribute("pageBean",this.getPageBean());
+        }
+        return "manageUsers";
+    }
+    //修改用户状态
+    public String updateUserStatus(){
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String page = request.getParameter("page");
+        String status = request.getParameter("status");
+        String uid = request.getParameter("id");
+        userService.updateUserStatus(Integer.parseInt(uid),status);
         setPageBean(userService.getUsers(Integer.parseInt(page),paseSize));
         List<TbUsers> userList = (List<TbUsers>) this.pageBean.getList();
         if (userList != null) {

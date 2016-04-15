@@ -38,4 +38,6 @@ public interface ProductService {
     boolean updateProductStatus(String status,int id);
     //验证商品是否有下单
     boolean checkProductIsUsed(int pid);
+    //更新商品
+    boolean updateProduct(TbProduct product);
 }

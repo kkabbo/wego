@@ -19,6 +19,12 @@ To change this template use File | Settings | File Templates.
         <jsp:include page="./common/common-nav.jsp"></jsp:include>
         <!-- Main content -->
         <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <h4>商品管理>添加商品</h4>
+                </div>
+            </div>
+
             <form class="form-horizontal" action="product_addProduct" method="post"
                   enctype="multipart/form-data">
                 <div class="form-group">

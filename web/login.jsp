@@ -92,11 +92,11 @@ To change this template use File | Settings | File Templates.
 <!-- Interactive Login - START -->
 <div class="container-fluid">
     <div class="row">
-        <form class="loginpanel" action="registerUser" method="POST">
+        <form class="loginpanel" action="user_login" method="POST">
             <h2>登录</h2>
             <div>
-                <input name="user_id" id="username" type="text" placeholder="登录账号" onkeypress="check_values();">
-                <input name="wx_id" id="password" type="password" placeholder="输入密码" onkeypress="check_values();">
+                <input name="user.name" id="username" type="text" placeholder="登录账号" onkeypress="check_values();">
+                <input name="user.password" id="password" type="password" placeholder="输入密码" onkeypress="check_values();">
                 <div class="buttonwrapper">
                     <button id="loginbtn" type="submit" class="btn btn-success loginbutton">
                         <span class="glyphicon glyphicon-ok"></span>

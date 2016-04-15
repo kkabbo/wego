@@ -113,4 +113,16 @@ public class UserServiceImpl implements UserService{
         pageBean.init();
         return pageBean;
     }
+
+    /**
+     * 根据用户id修改用户状态
+     * @param uid
+     * @param status
+     * @return
+     */
+    public boolean updateUserStatus(int uid,String status){
+        String hql = "update TbUsers set status = ? where id = ?";
+        return  baseDao.update(hql,status,uid);
+    }
+
 }

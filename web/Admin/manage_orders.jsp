@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.app.model.PageBean" %><%--
   Created by IntelliJ IDEA.
   Date: 2016/4/11
   Time: 16:51
@@ -20,7 +20,12 @@
         <!-- Main content -->
         <div class="col-md-10">
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-md-12 ">
+                    <h4>订单管理</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-center">
                     <table class="table table-bordered table-hover text-center">
                         <tr class="success">
                             <td><b>序号</b></td>
@@ -35,7 +40,8 @@
                             <td style="width: 100px"><b>操作</b></td>
                         </tr>
                         <%
-                            int i = 1;
+                            PageBean pb= (PageBean)request.getAttribute("pageBean");
+                            int i = ( pb.getCurrentPage() - 1 ) * pb.getPageSize() + 1;
                         %>
                         <s:iterator value="#request.orderList" var="order">
                             <tr>
@@ -70,10 +76,13 @@
                                     <s:if test="%{#order.status == 'cancel' }">
                                         <span class="text-muted">已取消</span>
                                     </s:if>
+                                    <s:if test="%{#order.status == 'want' }">
+                                        <span class="text-muted">预购买</span>
+                                    </s:if>
                                 </td>
                                 <td>
-                                    <a class="btn btn-xs btn-default" href="__URL__/banGoods/id/{$value.goods_id}">查看</a>
-                                    <a class="btn btn-xs btn-danger" href="__URL__/deleteGoods/id/{$value.goods_id}">发货</a>
+                                    <a class="btn btn-xs btn-primary" href="">查看</a>
+                                    <a class="btn btn-xs btn-success" href="">发货</a>
                                 </td>
                             </tr>
                             <%

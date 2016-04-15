@@ -18,4 +18,5 @@ public interface  UserService {
     Object addUser(TbUsers users);
     Object getUserByName(String name);
     PageBean getUsers(int page, int pageSize);
+    boolean updateUserStatus(int uid,String status);
 }

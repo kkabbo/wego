@@ -90,8 +90,22 @@ public class OrderAction extends ActionSupport {
     //新增购物车
     public String addCart() {
         Map session = ActionContext.getContext().getSession();
-//        String uid = session.get("uid").toString();
-        String uid = "1";
+        String uid ;
+        if(session.containsKey("uid")){
+            uid = session.get("uid").toString();
+        }else{
+            return LOGIN;
+        }
+        TbProduct product = (TbProduct)orderService.getProduct(TbProduct.class,salesitem.getProduct().getId());
+        int stock = product.getStock() == null?0:product.getStock();
+        if(salesitem.getCount() > stock){
+            session.put("info","库存不足！");
+            return "products";
+        }else{
+            int sellCount = product.getSellCount()== null?0:product.getSellCount();
+            product.setSellCount(sellCount + salesitem.getCount());
+            product.setStock(product.getStock() - salesitem.getCount());
+        }
         if (uid != null && !uid.equals("")) {
             int oid;
             List list = orderService.getOrderByUidAndStatus(Integer.parseInt(uid), "want");
@@ -128,6 +142,9 @@ public class OrderAction extends ActionSupport {
             double amount = salesitem.getPrice() * salesitem.getCount();
             salesitem.setAmount(amount);
             if (orderService.addOrupdateCart(salesitem)) {
+                //销量加，库存减
+
+                orderService.updateProduct(product);
                 return "products";
             } else {
                 return ERROR;
@@ -140,8 +157,12 @@ public class OrderAction extends ActionSupport {
     //获取购物车
     public String getCart() {
         Map session = ActionContext.getContext().getSession();
-//        String uid = session.get("uid").toString();
-        String uid = "1";
+        String uid ;
+        if(session.containsKey("uid")){
+            uid = session.get("uid").toString();
+        }else{
+            return LOGIN;
+        }
         List<TbSalesitem> salesitemList = (List<TbSalesitem>) orderService.getCart(Integer.parseInt(uid));
         int i = 0;
         float amount = 0;
@@ -171,8 +192,12 @@ public class OrderAction extends ActionSupport {
     //下单
     public String placeAnOrder() {
         Map session = ActionContext.getContext().getSession();
-//        String uid = session.get("uid").toString();
-        String uid = "1";
+        String uid ;
+        if(session.containsKey("uid")){
+            uid = session.get("uid").toString();
+        }else{
+            return LOGIN;
+        }
         HttpServletRequest request = ServletActionContext.getRequest();
         String payType = request.getParameter("payType");
         String amount = request.getParameter("amount");
@@ -275,8 +300,13 @@ public class OrderAction extends ActionSupport {
     //获取我的订单
     public String getOrders() {
         Map session = ActionContext.getContext().getSession();
-//        String uid = session.get("uid").toString();
-        String uid = "1";
+        String uid ;
+        if(session.containsKey("uid")){
+            uid = session.get("uid").toString();
+        }else{
+            return LOGIN;
+        }
+//        String uid = "1";
         HttpServletRequest request = ServletActionContext.getRequest();
         String showOrdersType= request.getParameter("type");
         List<TbSalesorder> list;

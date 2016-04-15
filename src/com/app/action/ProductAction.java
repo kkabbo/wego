@@ -79,7 +79,7 @@ public class ProductAction extends ActionSupport {
 
     //添加商品
     public String addProduct() {
-        if (fileFileName != "") {
+        if (fileFileName != null && !fileFileName.equals("")) {
             fileFileName = new Date().getTime() + getExtention(this.getFileFileName());
             product.setImages(fileFileName);
         }
@@ -97,6 +97,18 @@ public class ProductAction extends ActionSupport {
 
     //显示首页，为重定向而建
     public String index() {
+        Map session = ActionContext.getContext().getSession();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        if (session.containsKey("info")){
+            String info = session.get("info").toString();
+            request.setAttribute("info", info);
+            session.remove("info");
+        }
+        if (session.containsKey("pageBean")){
+            setPageBean((PageBean) session.get("pageBean"));
+            List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
+            request.setAttribute("productList", productList);
+        }
         return "index";
     }
 
@@ -117,9 +129,11 @@ public class ProductAction extends ActionSupport {
 
     //通过传过的页数获取商品
     public String getProductsBypage(){
+        Map session = ActionContext.getContext().getSession();
         HttpServletRequest request = ServletActionContext.getRequest();
         String page = request.getParameter("page");
         setPageBean(productService.getProducts(Integer.parseInt(page),paseSize));
+        session.put("pageBean",this.getPageBean());
         List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
         if (productList != null) {
             request.setAttribute("productList", productList);
@@ -335,5 +349,59 @@ public class ProductAction extends ActionSupport {
         target = new File(filePath, fileName);
         //调用方法实现文件的复制,注意必须是要创建先创建文件夹，创建完文件再创建文件，对文件进行操作
         uploadFile(file, target);
+    }
+
+    //更新商品
+    public String updateProduct(){
+        Map session = ActionContext.getContext().getSession();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        int page = 1;
+        if (session.containsKey("pageBean")){
+            setPageBean((PageBean) session.get("pageBean"));
+            page = pageBean.getCurrentPage();
+            List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
+            request.setAttribute("productList", productList);
+            request.setAttribute("pageBean",this.getPageBean());
+        }
+
+        TbProduct oldProduct = (TbProduct)productService.getProductInfo(this.product.getId());
+        oldProduct.setName(this.product.getName());
+        oldProduct.setStock(this.product.getStock());
+        oldProduct.setNormalPrice(this.product.getNormalPrice());
+        oldProduct.setMarketPrice(this.product.getMarketPrice());
+        if (fileFileName != null && !fileFileName.equals("")) {
+            fileFileName = new Date().getTime() + getExtention(this.getFileFileName());
+            product.setImages(fileFileName);
+            oldProduct.setImages(this.product.getImages());
+        }
+
+        if(productService.updateProduct(oldProduct)){
+            if (file != null) {
+                copyFile(fileFileName);
+            }
+            setPageBean(productService.getProducts(page,paseSize));
+            session.put("pageBean",this.getPageBean());
+            List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
+            request.setAttribute("productList", productList);
+            request.setAttribute("pageBean",this.getPageBean());
+            request.setAttribute("errors","修改成功");
+        }else{
+            request.setAttribute("errors","修改失败");
+        }
+        return "manageProducts";
+    }
+
+    public String redirectProduct(){
+        Map session = ActionContext.getContext().getSession();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        if (session.containsKey("pageBean")){
+            setPageBean((PageBean) session.get("pageBean"));
+            List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
+            request.setAttribute("productList", productList);
+            request.setAttribute("pageBean",this.getPageBean());
+        }else{
+            return ERROR;
+        }
+        return "showProducts";
     }
 }

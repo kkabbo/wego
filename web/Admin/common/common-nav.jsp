@@ -38,7 +38,6 @@
             <a href="order_getAllOrders?page=1">
                 <i class="glyphicon glyphicon-globe"></i>
                 订单管理
-                <span class="label label-warning pull-right">5</span>
             </a>
         </li>
 

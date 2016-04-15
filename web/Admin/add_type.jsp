@@ -19,6 +19,11 @@ To change this template use File | Settings | File Templates.
         <!-- Main content -->
         <div class="col-md-10">
             <div class="row">
+                <div class="col-md-12 ">
+                    <h4>商品管理>添加商品类型</h4>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xs-10 col-xs-offset-1">
                     <form class="form-horizontal" action="product_addProductType" method="post">
                         <div class="form-group">
