@@ -18,6 +18,7 @@
 				<param name="actionName">product_redirectProduct</param>
 			</result>
 			<result name="manageProducts">/Admin/manage_products.jsp</result>
+			<result name="adminLogin">/Admin/login.jsp</result>
 			<result name="showProducts">/Admin/manage_products.jsp</result>
 			<result name="input">/index.jsp</result>
 			<result name="error">/index.jsp</result>
@@ -36,6 +37,7 @@
 			</result>
 			<result name="showOrders">/orders.jsp</result>
 			<result name="manageOrders">/Admin/manage_orders.jsp</result>
+			<result name="adminLogin">/Admin/login.jsp</result>
 			<result name="order">/order.jsp</result>
 			<result name="input">/index.jsp</result>
 			<result name="error">/index.jsp</result>
@@ -58,6 +60,14 @@
 			<result name="personal">/personal.jsp</result>
 			<result name="input">/index.jsp</result>
 			<result name="error">/index.jsp</result>
+		</action>
+
+		<action name="admin_*" class="adminAction" method="{1}">
+			<result name="login">/Admin/login.jsp</result>
+			<result name="manageUsers">/Admin/manage_users.jsp</result>
+			<result name="index">/Admin/index.jsp</result>
+			<result name="error">/Admin/index.jsp</result>
+			<result name="input">/Admin/index.jsp</result>
 		</action>
 
 

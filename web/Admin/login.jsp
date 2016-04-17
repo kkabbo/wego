@@ -5,13 +5,15 @@ Time: 23:34
 To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>登录</title>
+    <title>后台登录</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
     <style>
         body {
             font-family: 'microsoft yahei', Arial, sans-serif;
@@ -92,11 +94,11 @@ To change this template use File | Settings | File Templates.
 <!-- Interactive Login - START -->
 <div class="container-fluid">
     <div class="row">
-        <form class="loginpanel" action="user_login" method="POST">
+        <form class="loginpanel" action="admin_login" method="POST">
             <h2>登录</h2>
             <div>
-                <input name="user.name" value="user" id="username" type="text" placeholder="登录账号" onkeypress="check_values();">
-                <input name="user.password" id="password" value="123" type="password" placeholder="输入密码" onkeypress="check_values();">
+                <input name="admin.name" value="user" id="username" type="text" placeholder="登录账号" onkeypress="check_values();">
+                <input name="admin.password" id="password" value="123" type="password" placeholder="输入密码" onkeypress="check_values();">
                 <div class="buttonwrapper">
                     <button id="loginbtn" type="submit" class="btn btn-success loginbutton">
                         <span class="glyphicon glyphicon-ok"></span>
@@ -107,10 +109,18 @@ To change this template use File | Settings | File Templates.
         </form>
     </div>
 </div>
+<input type="hidden" id="error" value="<s:property value='#request.info'/>">
+
 <!-- Interactive Login - END -->
-<script type="text/javascript" src="./js/jquery-2.0.2.js"></script>
-<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/jquery-2.0.2.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript">
+    $(document).ready(function(){
+        var error = $("#error").val();
+        if (error != null && error != "") {
+            alert(error);
+        }
+    });
     function check_values() {
         if ($("#username").val().length != 0 && $("#password").val().length != 0) {
             $("#loginbtn").animate({left: '0', duration: 'slow'});

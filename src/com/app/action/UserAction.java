@@ -81,8 +81,12 @@ public class UserAction extends ActionSupport {
     //支付的时候新增地址
     public String addAddressOnPay() {
         Map session = ActionContext.getContext().getSession();
-//        String uid = session.get("uid").toString();
-        String uid = "1";
+        String uid ;
+        if(session.containsKey("uid")){
+            uid = session.get("uid").toString();
+        }else{
+            return LOGIN;
+        }
         userService.setAddressDefault(0, Integer.parseInt(uid));//设置其他地址为不是默认
         address.setUserId(Integer.parseInt(uid));
         address.setIsDefault(1);
@@ -96,8 +100,12 @@ public class UserAction extends ActionSupport {
     //管理地址的时候新增地址
     public String addAddress() {
         Map session = ActionContext.getContext().getSession();
-//        String uid = session.get("uid").toString();
-        String uid = "1";
+        String uid ;
+        if(session.containsKey("uid")){
+            uid = session.get("uid").toString();
+        }else{
+            return LOGIN;
+        }
         userService.setAddressDefault(0, Integer.parseInt(uid));//设置其他地址为不是默认
         address.setUserId(Integer.parseInt(uid));
         address.setIsDefault(1);
@@ -248,7 +256,7 @@ public class UserAction extends ActionSupport {
     public String login(){
         Map session = ActionContext.getContext().getSession();
         TbUsers users = (TbUsers)userService.getUserByName(this.user.getName());
-        if(users.getPassword().equals(this.getUser().getPassword())){
+        if(users != null && users.getPassword().equals(this.getUser().getPassword())){
             session.put("uid",users.getId());
             session.put("user",users);
         }else{

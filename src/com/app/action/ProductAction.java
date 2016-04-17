@@ -130,6 +130,9 @@ public class ProductAction extends ActionSupport {
     //通过传过的页数获取商品
     public String getProductsBypage(){
         Map session = ActionContext.getContext().getSession();
+        if(!checkAdminLogin()){//验证管理员是否登录
+            return "adminLogin";
+        }
         HttpServletRequest request = ServletActionContext.getRequest();
         String page = request.getParameter("page");
         setPageBean(productService.getProducts(Integer.parseInt(page),paseSize));
@@ -141,9 +144,28 @@ public class ProductAction extends ActionSupport {
         }
         return "manageProducts";
     }
+
+    //判断管理员是否登录
+    public boolean checkAdminLogin(){
+        Map session = ActionContext.getContext().getSession();
+        String aid ;
+        if(session.containsKey("aid")){
+            aid = session.get("aid").toString();
+            if(aid == null || aid.equals("")){
+                return false;
+            }
+        }else{
+            return false;
+        }
+        return true;
+    }
+
     //删除商品
     public String deleteProduct(){
         HttpServletRequest request = ServletActionContext.getRequest();
+        if(!checkAdminLogin()){//验证管理员是否登录
+            return "adminLogin";
+        }
         String pid = request.getParameter("id");
         String page = request.getParameter("page");
         if(pid != null && !pid.equals("")){
@@ -165,6 +187,9 @@ public class ProductAction extends ActionSupport {
     }
     //商品上架
     public String saleProduct(){
+        if(!checkAdminLogin()){//验证管理员是否登录
+            return "adminLogin";
+        }
         HttpServletRequest request = ServletActionContext.getRequest();
         String pid = request.getParameter("id");
         String page = request.getParameter("page");
@@ -185,6 +210,9 @@ public class ProductAction extends ActionSupport {
     }
     //商品下架
     public String stockProduct(){
+        if(!checkAdminLogin()){//验证管理员是否登录
+            return "adminLogin";
+        }
         HttpServletRequest request = ServletActionContext.getRequest();
         String pid = request.getParameter("id");
         String page = request.getParameter("page");
@@ -258,6 +286,9 @@ public class ProductAction extends ActionSupport {
 
     //添加商品类型
     public String addProductType() {
+        if(!checkAdminLogin()){//验证管理员是否登录
+            return "adminLogin";
+        }
         if (productService.addProductType(type)) {
             HttpServletRequest request = ServletActionContext.getRequest();
             request.setAttribute("productType", "productType");
@@ -353,6 +384,9 @@ public class ProductAction extends ActionSupport {
 
     //更新商品
     public String updateProduct(){
+        if(!checkAdminLogin()){//验证管理员是否登录
+            return "adminLogin";
+        }
         Map session = ActionContext.getContext().getSession();
         HttpServletRequest request = ServletActionContext.getRequest();
         int page = 1;
@@ -389,19 +423,5 @@ public class ProductAction extends ActionSupport {
             request.setAttribute("errors","修改失败");
         }
         return "manageProducts";
-    }
-
-    public String redirectProduct(){
-        Map session = ActionContext.getContext().getSession();
-        HttpServletRequest request = ServletActionContext.getRequest();
-        if (session.containsKey("pageBean")){
-            setPageBean((PageBean) session.get("pageBean"));
-            List<TbProduct> productList = (List<TbProduct>) this.pageBean.getList();
-            request.setAttribute("productList", productList);
-            request.setAttribute("pageBean",this.getPageBean());
-        }else{
-            return ERROR;
-        }
-        return "showProducts";
     }
 }

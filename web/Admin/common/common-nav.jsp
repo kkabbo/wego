@@ -9,12 +9,12 @@
                 首页
             </a>
         </li>
-        <li>
-            <a href="">
-                <i class="glyphicon glyphicon-credit-card"></i>
-                基本信息
-            </a>
-        </li>
+        <%--<li>--%>
+            <%--<a href="#">--%>
+                <%--<i class="glyphicon glyphicon-credit-card"></i>--%>
+                <%--基本信息--%>
+            <%--</a>--%>
+        <%--</li>--%>
         <li>
             <a href="#productSetting" class="nav-header collapsed" data-toggle="collapse">
                 <i class="glyphicon glyphicon-cog"></i>

@@ -160,21 +160,25 @@ public class OrderAction extends ActionSupport {
         String uid ;
         if(session.containsKey("uid")){
             uid = session.get("uid").toString();
+            List<TbSalesitem> salesitemList = (List<TbSalesitem>) orderService.getCart(Integer.parseInt(uid));
+            int i = 0;
+            float amount = 0;
+            if (salesitemList != null && salesitemList.size() > 0) {
+                for (i = 0; i < salesitemList.size(); i++) {
+                    amount += salesitemList.get(i).getAmount();
+                }
+            }
+            HttpServletRequest request = ServletActionContext.getRequest();
+            request.setAttribute("salesitemList", salesitemList);
+            request.setAttribute("count", i);
+            request.setAttribute("amount", amount);
         }else{
+            HttpServletRequest request = ServletActionContext.getRequest();
+            request.setAttribute("salesitemList", null);
+            request.setAttribute("count", 0);
+            request.setAttribute("amount", 0);
             return LOGIN;
         }
-        List<TbSalesitem> salesitemList = (List<TbSalesitem>) orderService.getCart(Integer.parseInt(uid));
-        int i = 0;
-        float amount = 0;
-        if (salesitemList != null && salesitemList.size() > 0) {
-            for (i = 0; i < salesitemList.size(); i++) {
-                amount += salesitemList.get(i).getAmount();
-            }
-        }
-        HttpServletRequest request = ServletActionContext.getRequest();
-        request.setAttribute("salesitemList", salesitemList);
-        request.setAttribute("count", i);
-        request.setAttribute("amount", amount);
         return null;
     }
 
@@ -341,8 +345,25 @@ public class OrderAction extends ActionSupport {
 
     }
 
+    //判断管理员是否登录
+    public boolean checkAdminLogin(){
+        Map session = ActionContext.getContext().getSession();
+        String aid ;
+        if(session.containsKey("aid")){
+            aid = session.get("aid").toString();
+            if(aid == null || aid.equals("")){
+                return false;
+            }
+        }else{
+            return false;
+        }
+        return true;
+    }
     //通过页数获取所有订单
     public String getAllOrders(){
+        if(!checkAdminLogin()){//验证管理员是否登录
+            return "adminLogin";
+        }
         HttpServletRequest request = ServletActionContext.getRequest();
         String page = request.getParameter("page");
         setPageBean(orderService.getOrders(Integer.parseInt(page),paseSize));

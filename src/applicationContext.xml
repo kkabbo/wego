@@ -28,11 +28,13 @@
     <bean id="userAction" class="com.app.action.UserAction" scope="prototype"> </bean>
     <bean id="productAction" class="com.app.action.ProductAction" scope="prototype"> </bean>
     <bean id="orderAction" class="com.app.action.OrderAction" scope="prototype"> </bean>
+    <bean id="adminAction" class="com.app.action.AdminAction" scope="prototype"> </bean>
 
 
     <bean id="baseDao" class="com.app.dao.impl.BaseDaoImpl"> </bean>
     <bean id="productService" class="com.app.service.impl.ProductServiceImpl"> </bean>
     <bean id="orderService" class="com.app.service.impl.OrderServiceImpl"> </bean>
     <bean id="userService" class="com.app.service.impl.UserServiceImpl"> </bean>
+    <bean id="adminService" class="com.app.service.impl.AdminServiceImpl"> </bean>
 
 </beans>
